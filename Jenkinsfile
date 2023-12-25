@@ -22,10 +22,16 @@ pipeline {
                             sh './build.sh ${TARGET} ${SU}'
                         }
                     }
-                   
+                }
+
+                post {
+                    always {
+                        archiveArtifacts artifacts: '*.zip', fingerprint: true
+                    }
                 }
             }
         }
     }
+
 }
 

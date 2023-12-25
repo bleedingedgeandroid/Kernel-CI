@@ -1,6 +1,8 @@
 #!/bin/bash
 cd kernel
 BUILD_SUFFIX=""
+KVERSION=$(cat Makefile | grep -Pe "VERSION|LEVEL" | head -3 | awk '{print $3}' | paste -sd ".")
+
 
 if [ $1 == "MIUI" ]; 
 then
@@ -11,6 +13,7 @@ else
   BUILD_SUFFIX="${BUILD_SUFFIX}-AOSP"
 fi
 if [ $2 == "KSU" ]; then
+  echo "Enabling KSU"
   BUILD_SUFFIX="${BUILD_SUFFIX}-KSU"
   curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -
 else
@@ -22,7 +25,9 @@ TOOLCHAIN_PATHS="/home/jenkins-compile/tools/linux-x86/${TARGET_CLANG}/bin:/home
 
 export PATH=${TOOLCHAIN_PATHS}:${PATH}
 
+echo "making defconfig"
 make O=out ARCH=arm64 vendor/spes-perf_defconfig
+echo "making kernel"
 make -j$(nproc --all) O=out \
                       ARCH=arm64 \
                       CC=clang \
@@ -30,3 +35,17 @@ make -j$(nproc --all) O=out \
                       CROSS_COMPILE=aarch64-linux-android- \
                       CROSS_COMPILE_ARM32=arm-linux-androideabi-
 
+cd ..
+cp kernel/out/arch/arm64/boot/Image.gz AnyKernel3-spes/
+cp kernel/out/arch/arm64/boot/dtbo.img AnyKernel3-spes/
+
+echo "Zipping"
+
+cd AnyKernel3-spes/
+echo "#!/bin/bash" >  build_info.sh
+echo "KVERSION=${KVERSION}" >>  build_info.sh
+echo "CI_BUILDNO=${BUILD_NUMBER}" >>  build_info.sh
+echo "CI_BUILDSUFFIX=${BUILD_SUFFIX}" >>  build_info.sh
+
+zip -r9 ../Murali680-${BUILD_NUMBER}-$KVERSION${BUILD_SUFFIX}-PugzAreCuteCI.zip * -x .git README.md *placeholder 
+echo "Done"
