@@ -7,7 +7,7 @@ pipeline {
                 axes {
                     axis {
                         name 'TARGET'
-                        values 'aosp', 'memeui'
+                        values 'AOSP', 'MIUI'
                     }
                     axis {
                         name 'SU'
