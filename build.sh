@@ -20,7 +20,7 @@ fi
 TARGET_CLANG="clang-r450784e"
 TOOLCHAIN_PATHS="/home/jenkins-compile/tools/linux-x86/${TARGET_CLANG}/bin:/home/jenkins-compile/tools/aarch64-linux-android-4.9/bin:/home/jenkins-compile/tools/arm-linux-androideabi-4.9/bin"
 
-export PATH= ${TOOLCHAIN_PATHS}:${PATH}
+export PATH=${TOOLCHAIN_PATHS}:${PATH}
 
 make O=out ARCH=arm64 vendor/spes-perf_defconfig
 make -j$(nproc --all) O=out \
