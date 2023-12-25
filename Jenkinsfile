@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('BuildAndZip') {
             matrix {
-                agent kernel-builder
+                agent {label 'kernel-builder'}
                 axes {
                     axis {
                         name 'TARGET'
@@ -18,7 +18,8 @@ pipeline {
                     stage('Build') {
                         steps {
                             echo "Building for ${TARGET}-${SU}"
-                            sh 'build.sh ${TARGET} ${SU}'
+                            sh 'chmod +x ./build.sh '
+                            sh './build.sh ${TARGET} ${SU}'
                         }
                     }
                    
