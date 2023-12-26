@@ -42,10 +42,12 @@ cp kernel/out/arch/arm64/boot/dtbo.img AnyKernel3-spes/
 echo "Zipping"
 
 cd AnyKernel3-spes/
-echo "#!/bin/bash" >  build_info.sh
-echo "KVERSION=${KVERSION}" >>  build_info.sh
-echo "CI_BUILDNO=${BUILD_NUMBER}" >>  build_info.sh
-echo "CI_BUILDSUFFIX=${BUILD_SUFFIX}" >>  build_info.sh
+sed -i '1s/^/KVERSION="${KVERSION}"\n/' anykernel.sh
+sed -i '1s/^/CI_BUILDNO=${BUILD_NUMBER}\n/' anykernel.sh
+sed -i '1s/^/CI_BUILDSUFFIX="${BUILD_SUFFIX}"\n/' anykernel.sh
 
 zip -r9 ../Murali680-${BUILD_NUMBER}-$KVERSION${BUILD_SUFFIX}-PugzAreCuteCI.zip * -x .git README.md *placeholder 
 echo "Done"
+
+chmod +x notify.sh
+./notify.sh
