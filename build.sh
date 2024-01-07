@@ -15,6 +15,11 @@ fi
 if [ $2 == "KSU" ]; then
   echo "Enabling KSU"
   BUILD_SUFFIX="${BUILD_SUFFIX}-KSU"
+  echo '
+  CONFIG_KPROBES=y
+  CONFIG_HAVE_KPROBES=y
+  CONFIG_KPROBE_EVENTS=y
+  ' >> arch/arm64/configs/vendor/spes-perf_defconfig
   curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -
 else
   BUILD_SUFFIX="${BUILD_SUFFIX}-NOSU"
