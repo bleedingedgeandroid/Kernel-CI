@@ -15,11 +15,9 @@ fi
 if [ $2 == "KSU" ]; then
   echo "Enabling KSU"
   BUILD_SUFFIX="${BUILD_SUFFIX}-KSU"
-  echo '
-  CONFIG_KPROBES=y
-  CONFIG_HAVE_KPROBES=y
-  CONFIG_KPROBE_EVENTS=y
-  ' >> arch/arm64/configs/vendor/spes-perf_defconfig
+  echo 'CONFIG_KPROBES=y
+CONFIG_HAVE_KPROBES=y
+CONFIG_KPROBE_EVENTS=y' >> arch/arm64/configs/vendor/spes-perf_defconfig
   cat arch/arm64/configs/vendor/spes-perf_defconfig
   curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -
 else
@@ -35,8 +33,6 @@ export PATH=${TOOLCHAIN_PATHS}:${PATH}
 echo "making defconfig"
 make O=out ARCH=arm64 vendor/spes-perf_defconfig
 cat .config
-exit 0
-
 echo "making kernel"
 make -j$(nproc --all) O=out \
                       ARCH=arm64 \

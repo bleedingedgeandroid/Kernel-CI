@@ -21,7 +21,7 @@ pipeline {
                 stages {
                     stage('Build') {
                         steps {
-                            //cleanWs()
+                            cleanWs()
                             checkout scm
                             echo "Building for ${TARGET}-${SU}"
                             sh 'chmod +x ./build.sh '
