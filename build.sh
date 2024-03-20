@@ -17,7 +17,7 @@ KVERSION=$(cat Makefile | grep -Pe "VERSION|LEVEL" | head -3 | awk '{print $3}' 
 
 LMK_TEST=$(cat arch/arm64/configs/vendor/spes-perf_defconfig | grep CONFIG_ANDROID_SIMPLE_LMK -q) # 0=SLMK, 1=CLO LMK
 
-if [ $1 == "MIUI "]; 
+if [ $1 == "MIUI" ]; 
 then
   if [ $LMK_TEST ];
   then
