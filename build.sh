@@ -1,8 +1,4 @@
 #!/bin/bash
-BUILD_SUFFIX=""
-KVERSION=$(cat Makefile | grep -Pe "VERSION|LEVEL" | head -3 | awk '{print $3}' | paste -sd ".")
-
-
 if ! [ -d kernel ];
 then
   echo "Kernel not cloned, cloning."
@@ -14,6 +10,9 @@ else
   cd ..
 fi
 cd kernel
+
+BUILD_SUFFIX=""
+KVERSION=$(cat Makefile | grep -Pe "VERSION|LEVEL" | head -3 | awk '{print $3}' | paste -sd ".")
 
 LMK_TEST=$(cat arch/arm64/configs/vendor/spes_perf-defconfig | grep CONFIG_ANDROID_SIMPLE_LMK -q) # 0=SLMK, 1=CLO LMK
 
