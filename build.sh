@@ -72,7 +72,19 @@ make O=out ARCH=arm64 vendor/spes-perf_defconfig
 echo "making kernel"
 make -j$(nproc --all) O=out \
                       ARCH=arm64 \
-                      CC=clang
+                      CC=clang \
+                      LD=ld.lld \
+                      AS=llvm-as \
+                      AR=llvm-ar \
+                      NM=llvm-nm \
+                      OBJCOPY=llvm-objcopy \
+                      OBJDUMP=llvm-objdump \
+                      STRIP=llvm-strip \
+                      LLVM=1 \
+                      LLVM_IAS=1 \
+                      CLANG_TRIPLE=aarch64-linux-gnu- \
+                      CROSS_COMPILE=aarch64-linux-gnu- \
+                      CROSS_COMPILE_ARM32=arm-linux-gnueabi-
 
 cd ..
 cp kernel/out/arch/arm64/boot/Image.gz AnyKernel3-spes/
