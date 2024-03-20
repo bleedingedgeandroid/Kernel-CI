@@ -4,8 +4,10 @@ pipeline {
         stage('BuildAndZip') {
             matrix {
                 agent {
-                    label 'kernel-builder'
-                    customWorkspace "workspace/Android/Murali680-${TARGET}-${SU}" 
+                    node {
+                        label 'kernel-builder'
+                        customWorkspace "workspace/Android/Murali680-${TARGET}-${SU}" 
+                    }
                 }
                 axes {
                     axis {
