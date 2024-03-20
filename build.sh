@@ -104,6 +104,8 @@ else
 fi
 
 cd AnyKernel3/
+rm *.zip
+
 sed -i 's/INTERNAL_KVERSION/'"${KVERSION}"'/' anykernel.sh
 sed -i 's/CIBUILD/'"${BUILD_NUMBER}${BUILD_SUFFIX}/" anykernel.sh
 
