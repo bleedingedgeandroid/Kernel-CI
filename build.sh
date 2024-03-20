@@ -87,8 +87,8 @@ make -j$(nproc --all) O=out \
                       CROSS_COMPILE_ARM32=arm-linux-gnueabi-
 
 cd ..
-cp kernel/out/arch/arm64/boot/Image.gz AnyKernel3-spes/
-cp kernel/out/arch/arm64/boot/dtbo.img AnyKernel3-spes/
+cp kernel/out/arch/arm64/boot/Image.gz AnyKernel3/
+cp kernel/out/arch/arm64/boot/dtbo.img AnyKernel3/
 
 echo "Zipping"
 
