@@ -1,6 +1,7 @@
 #!/bin/bash
-echo "Weclome to kernel builder! Currently building ${DEFCONFIG} $1 $2"
 DEFCONFIG="vendor/spes-perf_defconfig"
+
+echo "Weclome to kernel builder! Currently building ${DEFCONFIG} $1 $2"
 
 if ! [ -d kernel ];
 then
