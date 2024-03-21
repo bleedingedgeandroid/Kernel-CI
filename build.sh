@@ -48,7 +48,7 @@ if [ $2 == "KSU" ]; then
   echo "KSU was not previously enabled. Enabling"
   echo 'CONFIG_KPROBES=y
 CONFIG_HAVE_KPROBES=y
-CONFIG_KPROBE_EVENTS=y' >> arch/arm64/configs/vendor/spes-perf_defconfig
+CONFIG_KPROBE_EVENTS=y' >> arch/arm64/configs/$DEFCONFIG
   curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -
   echo "KSU enabled."
   fi
