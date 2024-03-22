@@ -100,11 +100,6 @@ make -j$(nproc --all) O=out \
 cd ..
 echo "Kernel built. Copying Image.gz and DTBO"
 
-cp kernel/out/arch/arm64/boot/Image.gz AnyKernel3/
-cp kernel/out/arch/arm64/boot/dtbo.img AnyKernel3/
-
-echo "Creating flashable zip."
-
 if ! [ -d AnyKernel3 ];
 then
   echo "AnyKernel was not cloned, cloning."
@@ -117,6 +112,11 @@ else
   cd ..
   echo "Pulled remote changes for AnyKernel."
 fi
+
+cp kernel/out/arch/arm64/boot/Image.gz AnyKernel3/
+cp kernel/out/arch/arm64/boot/dtbo.img AnyKernel3/
+
+echo "Creating flashable zip."
 
 rm *.zip
 cd AnyKernel3/
