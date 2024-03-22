@@ -111,7 +111,7 @@ then
   git clone https://github.com/bleedingedgeandroid/Anykernel3-spes.git AnyKernel3
   echo "AnyKernel cloned into AnyKernel3."
 else
-  echo "AnyKernel was cloned brfore. Pulling remote changes."
+  echo "AnyKernel was cloned before. Pulling remote changes."
   cd AnyKernel3
   git pull
   cd ..
