@@ -3,27 +3,11 @@ DEFCONFIG="vendor/spes-perf_defconfig"
 KERNEL="https://github.com/muralivijay/kernel_xiaomi_sm6225.git"
 ANYKERNEL="https://github.com/osm0sis/AnyKernel3.git"
 
+source utils.sh
+
 echo "Weclome to kernel builder! Currently building ${KERNEL} ${DEFCONFIG} $1 $2"
 
-if ! [ -d kernel ];
-then
-  echo "Cloning kernel. Kernel was not cloned before."
-  git clone $KERNEL kernel
-  echo "Kernel cloned successfully."
-else
-  echo "Pulling changes of kernel. Kernel was cloned before."
-  cd kernel
-  if git pull | grep "divergent";
-  then
-  echo "Re-cloning kernel. Force-push occured at remote."
-  cd ..
-  rm -rf kernel
-  git clone $KERNEL kernel 
-  cd kernel
-  fi
-  cd ..
-  echo "Pulled remote changes."
-fi
+clone_or_pull $KERNEL "kernel" "Kernel"
 cd kernel
 
 BUILD_SUFFIX=""
@@ -74,18 +58,7 @@ else
   BUILD_SUFFIX="${BUILD_SUFFIX}-NOSU"
 fi
 
-if ! [ -d aosp_clang ];
-then
-  echo "Clang not cloned, cloning."
-  git clone https://gitlab.com/ThankYouMario/android_prebuilts_clang-standalone.git aosp_clang
-  echo "Clang cloned successfully"
-else
-  echo "Clang was cloned before. Pulling remote changes."
-  cd aosp_clang
-  git pull
-  cd ..
-  echo "Pulled remote changes for clang."
-fi
+clone_or_pull "https://gitlab.com/ThankYouMario/android_prebuilts_clang-standalone.git" "aosp_clang" "Toolchain"
 
 TOOLCHAIN_PATHS="$(pwd)/aosp_clang/bin/"
 export PATH=${TOOLCHAIN_PATHS}:${PATH}
@@ -111,18 +84,7 @@ make -j$(nproc --all) O=out \
 cd ..
 echo "Kernel built. Copying Image.gz and DTBO"
 
-if ! [ -d AnyKernel3 ];
-then
-  echo "AnyKernel was not cloned, cloning."
-  git clone $ANYKERNEL AnyKernel3
-  echo "AnyKernel cloned into AnyKernel3."
-else
-  echo "AnyKernel was cloned before. Pulling remote changes."
-  cd AnyKernel3
-  git pull
-  cd ..
-  echo "Pulled remote changes for AnyKernel."
-fi
+clone_or_pull $ANYKERNEL "AnyKernel3" "AnyKernel"
 
 cp kernel/out/arch/arm64/boot/Image.gz AnyKernel3/
 cp kernel/out/arch/arm64/boot/dtbo.img AnyKernel3/
