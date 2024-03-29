@@ -7,15 +7,15 @@ echo "Weclome to kernel builder! Currently building ${KERNEL} ${DEFCONFIG} $1 $2
 
 if ! [ -d kernel ];
 then
-  echo "Kernel has not been cloned. Cloning into kernel."
+  echo "Cloning kernel. Kernel was not cloned before."
   git clone $KERNEL kernel
   echo "Kernel cloned successfully."
 else
-  echo "Kernel was cloned before. Pulling remote changes"
+  echo "Pulling changes of kernel. Kernel was cloned before."
   cd kernel
   if git pull | grep "divergent";
   then
-  echo "Nuking kernel repos! Remote side force push!"
+  echo "Re-cloning kernel. Force-push occured at remote."
   cd ..
   rm -rf kernel
   git clone $KERNEL kernel 
@@ -27,9 +27,11 @@ fi
 cd kernel
 
 BUILD_SUFFIX=""
-KVERSION=$(cat Makefile | grep -Pe "VERSION|LEVEL" | head -3 | awk '{print $3}' | paste -sd ".")
+KERNEL_VERSION=$(cat Makefile | grep -Pe "VERSION|LEVEL" | head -3 | awk '{print $3}' | paste -sd ".")
 
-# NOT NEEDED FOR ALL KERNELS!
+# The following patches are kernel-dependant. The following are for the  Murali680 kernel for spes(Redmi Note 11/NFC).
+
+# Check if SLMK is enabled. MIUI wont boot witk SLMK enabled.
 LMK_TEST=$(cat arch/arm64/configs/$DEFCONFIG | grep CONFIG_ANDROID_SIMPLE_LMK -q) # 0=SLMK, 1=CLO LMK
 
 if [ $1 == "MIUI" ]; 
@@ -130,10 +132,10 @@ echo "Creating flashable zip."
 rm *.zip
 cd AnyKernel3/
 
-sed -i 's/INTERNAL_KVERSION/'"${KVERSION}"'/' anykernel.sh
+sed -i 's/INTERNAL_KERNEL_VERSION/'"${KERNEL_VERSION}"'/' anykernel.sh
 sed -i 's/CIBUILD/'"${BUILD_NUMBER}${BUILD_SUFFIX}/" anykernel.sh
 
-zip -r9 ../Murali680-${BUILD_NUMBER}-${KVERSION}${BUILD_SUFFIX}-PugzAreCuteCI.zip * -x .git README.md *placeholder 
+zip -r9 ../Murali680-${BUILD_NUMBER}-${KERNEL_VERSION}${BUILD_SUFFIX}-PugzAreCuteCI.zip * -x .git README.md *placeholder 
 echo "Done"
 
 cd ..
