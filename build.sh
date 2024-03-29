@@ -1,7 +1,7 @@
 #!/bin/bash
 DEFCONFIG="vendor/spes-perf_defconfig"
 KERNEL="https://github.com/muralivijay/kernel_xiaomi_sm6225.git"
-ANYKERNEL=https://github.com/bleedingedgeandroid/Anykernel3-spes.git 
+ANYKERNEL=https://github.com/osm0sis/AnyKernel3.git
 
 echo "Weclome to kernel builder! Currently building ${KERNEL} ${DEFCONFIG} $1 $2"
 
@@ -126,14 +126,15 @@ fi
 
 cp kernel/out/arch/arm64/boot/Image.gz AnyKernel3/
 cp kernel/out/arch/arm64/boot/dtbo.img AnyKernel3/
+cp patches/anykernel.sh AnyKernel3/
 
 echo "Creating flashable zip."
 
 rm *.zip
 cd AnyKernel3/
 
-sed -i 's/INTERNAL_KERNEL_VERSION/'"${KERNEL_VERSION}"'/' anykernel.sh
-sed -i 's/CIBUILD/'"${BUILD_NUMBER}${BUILD_SUFFIX}/" anykernel.sh
+sed -i 's/CI_KERNEL_VERSION/'"${KERNEL_VERSION}"'/' anykernel.sh
+sed -i 's/CI_BUILD_NUMBER/'"${BUILD_NUMBER}${BUILD_SUFFIX}/" anykernel.sh
 
 zip -r9 ../Murali680-${BUILD_NUMBER}-${KERNEL_VERSION}${BUILD_SUFFIX}-PugzAreCuteCI.zip * -x .git README.md *placeholder 
 echo "Done"
