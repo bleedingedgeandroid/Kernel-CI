@@ -11,7 +11,14 @@ then
 else
   echo "Kernel was cloned before. Pulling remote changes"
   cd kernel
-  git pull
+  if git pull | grep "divergent";
+  then
+  echo "Nuking kernel repos! Remote side force push!"
+  cd ..
+  rm -rf kernel
+  git clone https://github.com/muralivijay/kernel_xiaomi_sm6225.git kernel 
+  cd kernel
+  fi
   cd ..
   echo "Pulled remote changes."
 fi
