@@ -1,12 +1,14 @@
 #!/bin/bash
 DEFCONFIG="vendor/spes-perf_defconfig"
+KERNEL="https://github.com/muralivijay/kernel_xiaomi_sm6225.git"
+ANYKERNEL=https://github.com/bleedingedgeandroid/Anykernel3-spes.git 
 
-echo "Weclome to kernel builder! Currently building ${DEFCONFIG} $1 $2"
+echo "Weclome to kernel builder! Currently building ${KERNEL} ${DEFCONFIG} $1 $2"
 
 if ! [ -d kernel ];
 then
   echo "Kernel has not been cloned. Cloning into kernel."
-  git clone https://github.com/muralivijay/kernel_xiaomi_sm6225.git kernel
+  git clone $KERNEL kernel
   echo "Kernel cloned successfully."
 else
   echo "Kernel was cloned before. Pulling remote changes"
@@ -16,7 +18,7 @@ else
   echo "Nuking kernel repos! Remote side force push!"
   cd ..
   rm -rf kernel
-  git clone https://github.com/muralivijay/kernel_xiaomi_sm6225.git kernel 
+  git clone $KERNEL kernel 
   cd kernel
   fi
   cd ..
@@ -110,7 +112,7 @@ echo "Kernel built. Copying Image.gz and DTBO"
 if ! [ -d AnyKernel3 ];
 then
   echo "AnyKernel was not cloned, cloning."
-  git clone https://github.com/bleedingedgeandroid/Anykernel3-spes.git AnyKernel3
+  git clone $ANYKERNEL AnyKernel3
   echo "AnyKernel cloned into AnyKernel3."
 else
   echo "AnyKernel was cloned before. Pulling remote changes."
