@@ -1,6 +1,6 @@
 #!/bin/bash
 DEFCONFIG="vendor/spes-perf_defconfig"
-KERNEL="https://github.com/muralivijay/kernel_xiaomi_sm6225.git"
+KERNEL="https://github.com/AOSPA/android_kernel_xiaomi_sm6225"
 ANYKERNEL="https://github.com/osm0sis/AnyKernel3.git"
 
 source utils.sh
@@ -14,7 +14,7 @@ BUILD_SUFFIX=""
 KERNEL_VERSION=$(cat Makefile | grep -Pe "VERSION|LEVEL" | head -3 | awk '{print $3}' | paste -sd ".")
 
 # The following patches are kernel-dependant. The following are for the  Murali680 kernel for spes(Redmi Note 11/NFC).
-
+# Should not enable on uvite. MIUI builds disabled.
 # Check if SLMK is enabled. MIUI wont boot witk SLMK enabled.
 LMK_TEST=$(cat arch/arm64/configs/$DEFCONFIG | grep CONFIG_ANDROID_SIMPLE_LMK -q) # 0=SLMK, 1=CLO LMK
 
@@ -128,7 +128,7 @@ cd AnyKernel3/
 sed -i 's/CI_KERNEL_VERSION/'"${KERNEL_VERSION}"'/' anykernel.sh
 sed -i 's/CI_BUILD_NUMBER/'"${BUILD_NUMBER}${BUILD_SUFFIX}/" anykernel.sh
 
-zip -r9 ../Murali680-${BUILD_NUMBER}-${KERNEL_VERSION}${BUILD_SUFFIX}-PugzAreCuteCI.zip * -x .git README.md *placeholder 
+zip -r9 ../Uvite680-${BUILD_NUMBER}-${KERNEL_VERSION}${BUILD_SUFFIX}-PugzAreCuteCI.zip * -x .git README.md *placeholder 
 echo "Done"
 
 cd ..

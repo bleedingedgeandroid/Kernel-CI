@@ -6,13 +6,13 @@ pipeline {
                 agent {
                     node {
                         label 'kernel-builder'
-                        customWorkspace "workspace/Android/spes/Murali680-${TARGET}-${SU}-HAS_EROFS+${EROFS}" 
+                        customWorkspace "workspace/Android/spes/Uvite680-${TARGET}-${SU}-HAS_EROFS+${EROFS}" 
                     }
                 }
                 axes {
                     axis {
                         name 'TARGET'
-                        values 'AOSP', 'MIUI'
+                        values 'AOSP'
                     }
                     axis {
                         name 'SU'
@@ -20,7 +20,7 @@ pipeline {
                     }
                     axis {
                         name 'EROFS'
-                        values 'YES', 'NO'
+                        values 'NO'
                     }
                 }
                 stages {

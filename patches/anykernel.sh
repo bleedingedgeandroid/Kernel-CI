@@ -5,7 +5,7 @@
 # begin properties
 
 properties() { '
-kernel.string=Murali680 spes/spesn Kernel. Version CI_KERNEL_VERSION. CI build: CI_BUILD_NUMBER | Source by @muralivijay9845 | Compiled by @PugzAreCute
+kernel.string=Uvite680 spes/spesn Kernel. Version CI_KERNEL_VERSION. CI build: CI_BUILD_NUMBER | Source by @CHRISL7 and AOSPA Team. | Compiled by @PugzAreCute
 do.devicecheck=1
 do.modules=0
 do.systemless=0
