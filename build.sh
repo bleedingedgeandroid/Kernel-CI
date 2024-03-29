@@ -1,7 +1,7 @@
 #!/bin/bash
 DEFCONFIG="vendor/spes-perf_defconfig"
 KERNEL="https://github.com/muralivijay/kernel_xiaomi_sm6225.git"
-ANYKERNEL=https://github.com/osm0sis/AnyKernel3.git
+ANYKERNEL="https://github.com/osm0sis/AnyKernel3.git"
 
 echo "Weclome to kernel builder! Currently building ${KERNEL} ${DEFCONFIG} $1 $2"
 
