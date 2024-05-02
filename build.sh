@@ -60,7 +60,7 @@ fi
 
 if [ $3 == "YES" ]; then
   echo "Enabling EROFS"
-  if ! [ $(grep "CONFIG_EROFS_FS" arch/arm64/configs/${DEFCONFIG} | echo $?) -eq "0"];
+  if ! [ $(grep "CONFIG_EROFS_FS" arch/arm64/configs/${DEFCONFIG} | echo $?) -eq "0" ];
   then
   echo "EROFS was not previously enabled. Enabling"
   echo 'CONFIG_EROFS_FS=y' >> arch/arm64/configs/$DEFCONFIG
@@ -68,7 +68,7 @@ if [ $3 == "YES" ]; then
   fi
   BUILD_SUFFIX="${BUILD_SUFFIX}-EROFS"
 else
-  if [ $(grep "CONFIG_EROFS_FS" arch/arm64/configs/${DEFCONFIG} | echo $?) -eq "0"];
+  if [ $(grep "CONFIG_EROFS_FS" arch/arm64/configs/${DEFCONFIG} | echo $?) -eq "0" ];
   then
   echo "Something went wrong! EROFS is existing on Non-EROFS build."
   exit -1
