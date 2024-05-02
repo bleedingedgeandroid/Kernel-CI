@@ -5,7 +5,7 @@ ANYKERNEL="https://github.com/osm0sis/AnyKernel3.git"
 
 source utils.sh
 
-echo "Weclome to kernel builder! Currently building ${KERNEL} ${DEFCONFIG} $1 $2"
+echo "Weclome to kernel builder! Currently building ${KERNEL} ${DEFCONFIG} $1 $2 EROFS: $3"
 
 clone_or_pull $KERNEL "kernel" "Kernel"
 cd kernel
@@ -57,6 +57,25 @@ else
   fi
   BUILD_SUFFIX="${BUILD_SUFFIX}-NOSU"
 fi
+
+if [ $3 == "YES" ]; then
+  echo "Enabling EROFS"
+  if ! [ $(grep "CONFIG_EROFS_FS" arch/arm64/configs/${DEFCONFIG} | echo $?) -eq "0"];
+  then
+  echo "EROFS was not previously enabled. Enabling"
+  echo 'CONFIG_EROFS_FS=y' >> arch/arm64/configs/$DEFCONFIG
+  echo "EROFS enabled."
+  fi
+  BUILD_SUFFIX="${BUILD_SUFFIX}-EROFS"
+else
+  if [ $(grep "CONFIG_EROFS_FS" arch/arm64/configs/${DEFCONFIG} | echo $?) -eq "0"];
+  then
+  echo "Something went wrong! EROFS is existing on Non-EROFS build."
+  exit -1
+  fi
+  BUILD_SUFFIX="${BUILD_SUFFIX}-NORMALFS"
+fi
+
 
 clone_or_pull "https://gitlab.com/ThankYouMario/android_prebuilts_clang-standalone.git" "aosp_clang" "Toolchain"
 
