@@ -1,6 +1,6 @@
 #!/bin/bash
-DEFCONFIG="vendor/spes-perf_defconfig"
-KERNEL="https://github.com/muralivijay/kernel_xiaomi_sm6225.git"
+DEFCONFIG="vendor/fog-perf_defconfig"
+KERNEL="https://github.com/alternoegraha/wwy_kernel_xiaomi_fog_rebase.git"
 ANYKERNEL="https://github.com/osm0sis/AnyKernel3.git"
 
 source utils.sh
@@ -128,7 +128,7 @@ cd AnyKernel3/
 sed -i 's/CI_KERNEL_VERSION/'"${KERNEL_VERSION}"'/' anykernel.sh
 sed -i 's/CI_BUILD_NUMBER/'"${BUILD_NUMBER}${BUILD_SUFFIX}/" anykernel.sh
 
-zip -r9 ../Murali680-${BUILD_NUMBER}-${KERNEL_VERSION}${BUILD_SUFFIX}-PugzAreCuteCI.zip * -x .git README.md *placeholder 
+zip -r9 ../WhoeverYouWant-${BUILD_NUMBER}-${KERNEL_VERSION}${BUILD_SUFFIX}-PugzAreCuteCI.zip * -x .git README.md *placeholder 
 echo "Done"
 
 cd ..
