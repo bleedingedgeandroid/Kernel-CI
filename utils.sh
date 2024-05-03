@@ -47,3 +47,30 @@ else
   echo "Pulled remote changes for $3."
 fi
 }
+
+checkout_latest_tag() {
+  # $1 = Repo Dir
+  # $2 = Name
+
+  cd $1
+  echo "Checking out latest tag for $2"
+  echo "Safe fetching $2 tags"
+  n=0
+  until [ $n -ge 5 ]
+  do
+      git fetch --tags && break
+      echo "Safe fetch attempt $n fail. Retrying."
+      n=$[$n+1]
+      sleep 5
+  done
+  if [ $n -ge 5 ]; 
+  then
+  echo "Safe fetch failed for $2! Exit 35."
+  exit 35
+  fi
+  
+  latestTag=$(git describe --tags "$(git rev-list --tags --max-count=1)")
+  git checkout $latestTag
+
+  cd ..
+}
