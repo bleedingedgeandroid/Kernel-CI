@@ -13,9 +13,6 @@ do.cleanup=1
 do.cleanuponabort=0
 device.name1=spes
 device.name2=spesn
-device.name3=fog
-device.name4=wind
-device.name5=rain
 supported.versions=
 supported.patchlevels=
 '; } # end properties
