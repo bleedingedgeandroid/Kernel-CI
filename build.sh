@@ -42,9 +42,9 @@ if [ $2 == "KSU" ]; then
   
   echo ""
   echo ""
-  echo "[WARNING] KernelSU dropped non-GKI kernels from v0.9.0. We use v0.8.1, IF you adapt to a GKI kernel, please:"
+  echo "[WARNING] KernelSU dropped non-GKI kernels from v1.0.0. We use v0.9.3, IF you adapt to a GKI kernel, please:"
   echo "    a) remove this warning"
-  echo "    b) remove the v0.8.1 in the checkout line"
+  echo "    b) remove the v0.9.3 in the checkout line"
   echo "    c) un-comment the checkout_latest_tag line"
   echo ""
   echo ""
@@ -52,8 +52,10 @@ if [ $2 == "KSU" ]; then
   if ! [ -d KernelSU ];
   then
   echo "KSU was not previously enabled. Enabling"
-  echo ../patches/ksu.defconfig >> arch/arm64/configs/$DEFCONFIG
-  curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s v0.8.1
+  for patch_file in ../patches/*.patch ; do
+    patch -p1 --no-backup < "$patch_file"
+  done
+  curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s v0.9.3
   echo "KSU enabled."
   else
   echo "KSU version hardcoded. Not checking out latest tag."
