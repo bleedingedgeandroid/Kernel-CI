@@ -53,7 +53,7 @@ if [ $2 == "KSU" ]; then
   then
   echo "KSU was not previously enabled. Enabling"
   for patch_file in ../patches/*.patch ; do
-    patch -p1 --no-backup < "$patch_file"
+    patch -p1 --no-backup < "$patch_file" || exit 1
   done
   curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s v0.9.3
   echo "KSU enabled."
